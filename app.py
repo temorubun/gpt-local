@@ -147,23 +147,23 @@ def home():
     </body>
     </html>
     '''
-
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json.get("message")
     if not user_input:
-        return jsonify({"error": "Message cannot be empty"}), 400
+        return jsonify({"error": "Pesan tidak boleh kosong"}), 400
 
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "system", "content": "Anda adalah asisten yang membantu dengan penuh cinta dan kasih sayang."},
                 {"role": "user", "content": user_input}
             ]
         )
         reply = response["choices"][0]["message"]["content"].strip()
-        return jsonify({"reply": reply})
+        reply_with_emoji = f"❤️ {reply} ❤️"
+        return jsonify({"reply": reply_with_emoji})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
